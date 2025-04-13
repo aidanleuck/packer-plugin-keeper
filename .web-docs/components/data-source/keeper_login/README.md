@@ -45,7 +45,8 @@ This datasource retrieves a keeper login record and outputs its contents as HCL 
 
 - `password` (string) - password is the password of the record.
 
-- `url` (string) - url is the url associated with the record.
+- `url` (string) - url is the url associated withthe record.
+
 <!-- End of code generated from the comments of the KeeperLogin struct in datasource/keeper_datasource/types.go; -->
 
 
