@@ -18,7 +18,7 @@ go build -ldflags="-X github.com/aidanleuck/packer-plugin-keeper/version.Version
 
 4. To install the compiled plugin, run the following command 
 ```shell
-packer plugins install --path packer-plugin-scaffolding github.com/hashicorp/scaffolding
+packer plugins install --path packer-plugin-keeper github.com/aidanleuck/keeper
 ```
 
 ### Build on *nix systems
