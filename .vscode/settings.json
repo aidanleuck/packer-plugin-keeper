@@ -1,0 +1,6 @@
+{
+    "go.testEnvVars": {
+        "PACKER_ACC": "1",
+        "KEEPER_CONFIG_FILE": "/home/aidaleuc/.keeper/config.base64"
+    }
+}
