@@ -1,0 +1,39 @@
+
+---
+modeline: |
+  vim: set ft=pandoc:
+description: >
+  This datasource retrieves a keeper software license record and outputs its contents as HCL structures.
+page_title: Keeper Software License - Datasource
+sidebar_title: Datasource
+---
+
+
+
+# Keeper Software License Datasource
+
+Type: `keeper-software-license`
+
+This datasource retrieves a keeper software license record and outputs its contents as HCL structures for use in your Packer templates.
+
+## Examples
+
+- Basic examples are available in the [examples](https://github.com/aidanleuck/packer-plugin-keeper/tree/main/example)
+  directory of the GitHub repository.
+
+## Configuration Reference
+
+### Inputs
+
+#### Required
+
+@include '/datasource/keeper_datasource/Config-required.mdx'
+
+### Outputs
+
+@include '/datasource/keeper_datasource/KeeperRecordField-not-required.mdx'
+@include '/datasource/keeper_datasource/KeeperSoftwareLicense-not-required.mdx'
+
+#### Nested Schema for FileRef
+
+@include '/datasource/keeper_datasource/FileRef-not-required.mdx'
