@@ -45,7 +45,7 @@ The Keeper Packer plugin is a datasource plugin which allows you to inject crede
 
 - [keeper-login](./components/data-source/keeper_login/README.md) - The `keeper-login` datasource is used to retrieve a logon record type.
 - [keeper-api-key](./components/data-source/keeper_api_key/README.md) - The `keeper-api-key` datasource is used to retrieve a api key record type.
-- [keeper-database-credential](./components/data-source/keeper_database_credential/README.md) - The `keeper-database-credential` datasource is used to retrieve a database credential record type.
+- [keeper-database-credential](./components/data-source/keeper_database_credentials/README.md) - The `keeper-database-credential` datasource is used to retrieve a database credential record type.
 - [keeper-encrypted-note](./components/data-source/keeper_encrypted_note/README.md) - The `keeper-encrypted-note` datasource is used to retrieve a encrypted note/secret note record type.
 - [keeper-file](./components/data-source/keeper_file/README.md) - The `keeper-file` datasource is used to retrieve a file record in Keeper.
 - [keeper-server-credential](./components/data-source/keeper_server_credentials/README.md) - The `keeper-server-credential` datasource is used to retrieve a server record in Keeper.

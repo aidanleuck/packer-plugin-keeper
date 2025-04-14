@@ -4,7 +4,7 @@ This repository produces a Packer plugin which allows users to load secrets from
 
 ## Quick Start
 
-See the following [user facing documentation](https://github.com/aidanleuck/packer-plugin-keeper/blob/main/.web-docs/README.md) 
+See the following [user facing documentation](https://github.com/aidanleuck/packer-plugin-keeper/blob/main/docs/README.md) 
 ## Build from source
 
 1. Clone this GitHub repository locally.
