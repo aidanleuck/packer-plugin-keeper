@@ -38,7 +38,7 @@ func TestAccKeeperFile(t *testing.T) {
 				"null.basic-example: Notes: Single test",
 				"null.basic-example: File Name: test1.txt",
 				"null.basic-example: Type: text/plain",
-				"null.basic-example: File UID: mT69r6vfdC7lg7ERvpc0lQ",	
+				"null.basic-example: File UID: mT69r6vfdC7lg7ERvpc0lQ",
 				fmt.Sprintf("null.basic-example: Base 64 Data: %s", base64.StdEncoding.EncodeToString([]byte("test1"))),
 			}
 

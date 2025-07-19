@@ -25,7 +25,11 @@ func RunPackerAcceptanceTest(t *testing.T, buildCommand *exec.Cmd, logfile strin
 
 	logsString := string(logsBytes)
 	for _, line := range expectedLogLines {
-		matched, _ := regexp.MatchString(line+".*", logsString)
+		// Fixed: Handle error from regexp.MatchString instead of ignoring it
+		matched, err := regexp.MatchString(line+".*", logsString)
+		if err != nil {
+			return fmt.Errorf("failed to match regex pattern %s: %w", line, err)
+		}
 		assert.True(t, matched, "logs doesn't contain expected value %s", line)
 	}
 

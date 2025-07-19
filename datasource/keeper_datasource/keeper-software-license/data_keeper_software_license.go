@@ -37,7 +37,7 @@ func (d *Datasource) Configure(raws ...interface{}) error {
 	// Validate all required fields are set and valid
 	if err := keeper_datasource.ValidateDataSourceConfig(d.Config); err != nil {
 		return err
-	} 
+	}
 
 	return nil
 }

@@ -14,7 +14,7 @@ import (
 
 // TestInvalidConfigReturnsError tests that each datasource returns an error when the type of secret passed is not
 // the same type as the datasource.
-func TestInvalidTypeThrowsError(t *testing.T){
+func TestInvalidTypeThrowsError(t *testing.T) {
 	// No type should have a invalid type so this test will work on all datasources.
 	typeRecord := `{
 		"type": "invalid"
@@ -22,11 +22,11 @@ func TestInvalidTypeThrowsError(t *testing.T){
 		`
 	client := getMockedClient(typeRecord)
 
-	type tc struct{
+	type tc struct {
 		TestName string
 		function func(string) (interface{}, error)
-	} 
-	
+	}
+
 	// Test each data source with a type of invalid. This should return an error for all datasources.
 	tcs := []tc{
 		{
@@ -36,9 +36,9 @@ func TestInvalidTypeThrowsError(t *testing.T){
 			},
 		},
 		{
-			TestName: "GetApiKey",
+			TestName: "GetAPIKey",
 			function: func(uid string) (interface{}, error) {
-				return client.GetApiKey(uid)
+				return client.GetAPIKey(uid)
 			},
 		},
 		{
@@ -49,17 +49,17 @@ func TestInvalidTypeThrowsError(t *testing.T){
 		},
 		{
 			TestName: "GetFile",
-			function: func(uid string) (interface{}, error) {	
+			function: func(uid string) (interface{}, error) {
 				return client.GetFile(uid)
 			},
 		},
 		{
 			TestName: "GetEncryptedNote",
-			function: func(uid string) (interface{}, error) {		
+			function: func(uid string) (interface{}, error) {
 				return client.GetEncryptedNote(uid)
 			},
 		},
-		{	
+		{
 			TestName: "GetDatabaseCredentials",
 			function: func(uid string) (interface{}, error) {
 				return client.GetDatabaseCredentials(uid)
@@ -71,12 +71,12 @@ func TestInvalidTypeThrowsError(t *testing.T){
 				return client.GetServerCredentials(uid)
 			},
 		},
-		{	
+		{
 			TestName: "GetSSHKey",
 			function: func(uid string) (interface{}, error) {
 				return client.GetSSHKey(uid)
 			},
-		},	
+		},
 	}
 
 	// Assert that wrong record type error is returned for each data source.
@@ -144,9 +144,9 @@ func TestGetLogin(t *testing.T) {
     ],
     "custom_fields": [],
     "files": []
-}`,uid, title, notes, login, password, url)
+}`, uid, title, notes, login, password, url)
 
-    // Create a mocked client with the example JSON data. 
+	// Create a mocked client with the example JSON data.
 	// The client will return the JSON data as a Keeper record.
 	client := getMockedClient(loginRecordJson)
 	loginRecord, err := client.GetLogin(uid)
@@ -162,8 +162,8 @@ func TestGetLogin(t *testing.T) {
 	assert.Equal(t, LOGIN_FIELD_TYPE, loginRecord.Type)
 }
 
-// TestGetAPIKey tests that GetApiKey properly extracts API key information from the Keeper record.
-func TestGetApiKey(t *testing.T) {
+// TestGetAPIKey tests that GetAPIKey properly extracts API key information from the Keeper record.
+func TestGetAPIKey(t *testing.T) {
 	// Mock values
 	uid := "54c1e2f3-8a0b-4d5e-8b7f-9c6d7e8f9a0b"
 	title := "Test My API Key"
@@ -205,11 +205,11 @@ func TestGetApiKey(t *testing.T) {
 
 	// Create a mocked client with the example JSON data.
 	client := getMockedClient(apiKeyJson)
-	apiKeyRecord, err := client.GetApiKey(uid)
+	apiKeyRecord, err := client.GetAPIKey(uid)
 	require.NoError(t, err)
 
 	// Assert that the returned record matches the expected values.
-	
+
 	assert.Equal(t, title, apiKeyRecord.Title)
 	assert.Equal(t, notes, apiKeyRecord.Notes)
 	assert.Equal(t, appID, apiKeyRecord.AppId)
@@ -284,39 +284,39 @@ func TestGetSoftwareLicense(t *testing.T) {
 	assert.Equal(t, uid, softwareLicenseRecord.Uid)
 	assert.Equal(t, softwareLicenseRecord.ActivationDate, expectedActivationDate)
 	assert.Equal(t, softwareLicenseRecord.ExpirationDate, expectedExpirationDate)
-	assert.Equal(t, SOFTWARE_LICENSE_FIELD_TYPE, softwareLicenseRecord.Type)	
+	assert.Equal(t, SOFTWARE_LICENSE_FIELD_TYPE, softwareLicenseRecord.Type)
 }
 
 // TestGetFile tests that GetFile properly extracts file information from the Keeper record.
 func TestGetFile(t *testing.T) {
 	// Using a template to generate the JSON data for the file record
-	type templateData struct{
-		Uid string
-		Title string
-		Note string
+	type templateData struct {
+		Uid      string
+		Title    string
+		Note     string
 		FileRefs []FileRef
 	}
-	
+
 	// Mock data for the file record
 	data := &templateData{
-		Uid: "test-uid",
+		Uid:   "test-uid",
 		Title: "test-title",
-		Note: "test-note",
+		Note:  "test-note",
 		FileRefs: []FileRef{
 			{
-				Uid: "file-uid-1",
-				Name: "file-name-1",
-				Title: "file-title-1",
-				Type: "text/plain",
-				Size: 1234,
+				Uid:          "file-uid-1",
+				Name:         "file-name-1",
+				Title:        "file-title-1",
+				Type:         "text/plain",
+				Size:         1234,
 				LastModified: int(time.Now().UnixMilli()),
 			},
 			{
-				Uid: "file-uid-2",
-				Name: "file-name-2",
-				Title: "file-title-2",
-				Type: "text/plain",
-				Size: 5678,
+				Uid:          "file-uid-2",
+				Name:         "file-name-2",
+				Title:        "file-title-2",
+				Type:         "text/plain",
+				Size:         5678,
 				LastModified: int(time.Now().UnixMilli()),
 			},
 		},
@@ -351,7 +351,7 @@ func TestGetFile(t *testing.T) {
 }`)
 
 	// Add a custom add func to the template
-	addFunc := func (a, b int) int {
+	addFunc := func(a, b int) int {
 		return a + b
 	}
 
@@ -578,10 +578,10 @@ func TestGetDatabaseCredentials(t *testing.T) {
 func TestConvertDateStr(t *testing.T) {
 	// Test the function with a valid date string
 	t.Run("Valid date string", func(t *testing.T) {
-	dateStr := "1672531199000"
-	expectedDate := time.Unix(1672531199, 0).Format(time.RFC3339)
-	result := ConvertDateStr(dateStr)
-	assert.Equal(t, expectedDate, result)
+		dateStr := "1672531199000"
+		expectedDate := time.Unix(1672531199, 0).Format(time.RFC3339)
+		result := ConvertDateStr(dateStr)
+		assert.Equal(t, expectedDate, result)
 	})
 
 	// Test the function with an invalid date string
@@ -589,7 +589,7 @@ func TestConvertDateStr(t *testing.T) {
 		dateStr := "invalid-date"
 		result := ConvertDateStr(dateStr)
 		assert.Empty(t, result)
-	})	
+	})
 
 }
 
@@ -608,13 +608,13 @@ func getMockedClient(secretRecordJson string) *PackerKeeperClient {
 
 func recordFromJSON(data string) *ksm.Record {
 	recordFieldsDict := ksm.JsonToDict(data)
-	record :=  &ksm.Record{
+	record := &ksm.Record{
 		RecordDict: recordFieldsDict,
 	}
 
 	// JSONToDict only builds the dictionary so we need to setup
 	// mock some fields ourselves based off the JSON payload.
-	if uid, ok := recordFieldsDict["uid"].(string); ok{
+	if uid, ok := recordFieldsDict["uid"].(string); ok {
 		record.Uid = uid
 	} else {
 		record.Uid = ""
@@ -629,7 +629,7 @@ func recordFromJSON(data string) *ksm.Record {
 			if !ok {
 				continue
 			}
-			
+
 			// Build a keeper file object from the dictionary
 			keeperFile := &ksm.KeeperFile{
 				Uid:          fileDict["uid"].(string),
@@ -638,7 +638,7 @@ func recordFromJSON(data string) *ksm.Record {
 				Type:         fileDict["type"].(string),
 				LastModified: int(fileDict["last_modified"].(float64)),
 				Size:         int(fileDict["size"].(float64)),
-				FileData: []byte("string"),
+				FileData:     []byte("string"),
 			}
 
 			ksmFiles = append(ksmFiles, keeperFile)

@@ -37,7 +37,7 @@ func (d *Datasource) Configure(raws ...interface{}) error {
 	// Make sure the config is valid and all required fields are set
 	if err := keeper_datasource.ValidateDataSourceConfig(d.Config); err != nil {
 		return err
-	} 
+	}
 
 	return nil
 }
@@ -56,7 +56,7 @@ func (d *Datasource) Execute() (cty.Value, error) {
 	}
 
 	// Fetch the API key using the UID from the config
-	apiKey, err := keeperClient.GetApiKey(*d.Config.Uid)
+	apiKey, err := keeperClient.GetAPIKey(*d.Config.Uid)
 	if err != nil {
 		return cty.NullVal(cty.EmptyObject), err
 	}

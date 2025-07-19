@@ -33,7 +33,7 @@ func TestAccKeeperApiKey(t *testing.T) {
 				"null.basic-example: Title: Test API Key",
 				"null.basic-example: ClientSecret: 12345",
 				"null.basic-example: AppID: test-app-id",
-				"null.basic-example: Notes: Api key",	
+				"null.basic-example: Notes: Api key",
 			}
 
 			if err := keeper_datasource.RunPackerAcceptanceTest(t, buildCommand, logfile, logLines); err != nil {
