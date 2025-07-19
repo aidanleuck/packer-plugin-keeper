@@ -379,7 +379,7 @@ func (*FlatKeeperSoftwareLicense) HCL2Spec() map[string]hcldec.Spec {
 // FlatKeyPair is an auto-generated flat version of KeyPair.
 // Where the contents of a field with a `mapstructure:,squash` tag are bubbled up.
 type FlatKeyPair struct {
-	PublicKey  *string `mapstructure:"passphrase" cty:"passphrase" hcl:"passphrase"`
+	PublicKey  *string `mapstructure:"public_key" cty:"public_key" hcl:"public_key"`
 	PrivateKey *string `mapstructure:"private_key" cty:"private_key" hcl:"private_key"`
 }
 
@@ -395,7 +395,7 @@ func (*KeyPair) FlatMapstructure() interface{ HCL2Spec() map[string]hcldec.Spec 
 // The decoded values from this spec will then be applied to a FlatKeyPair.
 func (*FlatKeyPair) HCL2Spec() map[string]hcldec.Spec {
 	s := map[string]hcldec.Spec{
-		"passphrase":  &hcldec.AttrSpec{Name: "passphrase", Type: cty.String, Required: false},
+		"public_key":  &hcldec.AttrSpec{Name: "public_key", Type: cty.String, Required: false},
 		"private_key": &hcldec.AttrSpec{Name: "private_key", Type: cty.String, Required: false},
 	}
 	return s
