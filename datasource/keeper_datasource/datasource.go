@@ -4,7 +4,7 @@ import (
 	"errors"
 )
 
-var(
+var (
 	ErrUidRequired = errors.New("uid is a required field")
 )
 

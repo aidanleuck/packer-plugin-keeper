@@ -67,13 +67,13 @@ func (c *PackerKeeperClient) GetDatabaseCredentials(uid string) (*KeeperDataBase
 	return c.KeeperClient.GetDatabaseCredentials(r)
 }
 
-// GetSSHKey retrieves the SSH key for a given uid
-func (c *PackerKeeperClient) GetApiKey(uid string) (*KeeperAPIKey, error) {
+// GetAPIKey retrieves the API key for a given uid
+func (c *PackerKeeperClient) GetAPIKey(uid string) (*KeeperAPIKey, error) {
 	r, err := c.KeeperClient.GetSecret(uid)
 	if err != nil {
 		return nil, err
 	}
-	return c.KeeperClient.GetApiKey(r)
+	return c.KeeperClient.GetAPIKey(r)
 }
 
 // GetEncryptedNote retrieves the encrypted note for a given uid
@@ -94,7 +94,7 @@ func (c *PackerKeeperClient) GetFile(uid string) (*KeeperFile, error) {
 	return c.KeeperClient.GetFile(r)
 }
 
-// GetAPIKey retrieves the API key for a given uid
+// GetSoftwareLicense retrieves the software license for a given uid
 func (c *PackerKeeperClient) GetSoftwareLicense(uid string) (*KeeperSoftwareLicense, error) {
 	r, err := c.KeeperClient.GetSecret(uid)
 	if err != nil {

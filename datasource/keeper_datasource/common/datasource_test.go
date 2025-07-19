@@ -16,8 +16,8 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-type tc struct{
-	TestName string
+type tc struct {
+	TestName   string
 	DataSource packer.Datasource
 }
 
@@ -27,35 +27,35 @@ func TestInvalidConfigReturnsError(t *testing.T) {
 	tcs := []tc{
 		{
 			DataSource: &keeper_api_key.Datasource{},
-			TestName: "keeper_api_key",
+			TestName:   "keeper_api_key",
 		},
 		{
 			DataSource: &keeper_database_credentials.Datasource{},
-			TestName: "keeper_database_credentials",
+			TestName:   "keeper_database_credentials",
 		},
 		{
 			DataSource: &keeper_encrypted_note.Datasource{},
-			TestName: "keeper_encrypted_note",
+			TestName:   "keeper_encrypted_note",
 		},
 		{
 			DataSource: &keeper_file.Datasource{},
-			TestName: "keeper_file",
+			TestName:   "keeper_file",
 		},
 		{
 			DataSource: &keeper_login.Datasource{},
-			TestName: "keeper_login",
+			TestName:   "keeper_login",
 		},
 		{
 			DataSource: &keeper_server_credentials.Datasource{},
-			TestName: "keeper_server_credentials",
+			TestName:   "keeper_server_credentials",
 		},
 		{
 			DataSource: &keeper_software_license.Datasource{},
-			TestName: "keeper_software_license",
+			TestName:   "keeper_software_license",
 		},
 		{
 			DataSource: &keeper_ssh_key.Datasource{},
-			TestName: "keeper_ssh_key",
+			TestName:   "keeper_ssh_key",
 		},
 	}
 

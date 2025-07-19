@@ -33,7 +33,7 @@ func TestAccKeeperLogin(t *testing.T) {
 				"null.basic-example: Login: test@selinc.com",
 				"null.basic-example: Password: testing123",
 				"null.basic-example: Url: https://test.com",
-				"null.basic-example: Notes: Hello",	
+				"null.basic-example: Notes: Hello",
 			}
 
 			if err := keeper_datasource.RunPackerAcceptanceTest(t, buildCommand, logfile, logLines); err != nil {

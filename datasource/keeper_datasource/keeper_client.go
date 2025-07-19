@@ -15,17 +15,17 @@ import (
 // Constants for environment variables and Keeper record types.
 // Unfortunately, we have to hardcode these values as Keeper doesn't provide a way to get them programmatically.
 const (
-	KEEPER_CONFIG_FILE_ENV_KEY = "KEEPER_CONFIG_FILE"
-	KEEPER_CONFIG_ENV_KEY      = "KSM_CONFIG"
-	LOGIN_FIELD_TYPE         = "login"
-	DATABASE_FIELD_TYPE     = "databaseCredentials"
-	SERVER_FIELD_TYPE      = "serverCredentials"
-	API_KEY_FIELD_TYPE     = "API Key"
-	ENCRYPTED_NOTE_FIELD_TYPE = "encryptedNotes"
-	FILE_FIELD_TYPE        = "file"
+	KEEPER_CONFIG_FILE_ENV_KEY  = "KEEPER_CONFIG_FILE"
+	KEEPER_CONFIG_ENV_KEY       = "KSM_CONFIG"
+	LOGIN_FIELD_TYPE            = "login"
+	DATABASE_FIELD_TYPE         = "databaseCredentials"
+	SERVER_FIELD_TYPE           = "serverCredentials"
+	API_KEY_FIELD_TYPE          = "API Key"
+	ENCRYPTED_NOTE_FIELD_TYPE   = "encryptedNotes"
+	FILE_FIELD_TYPE             = "file"
 	SOFTWARE_LICENSE_FIELD_TYPE = "softwareLicense"
-	SSH_KEY_FIELD_TYPE     = "sshKeys"
-	PASSWORD_FIELD_TYPE = "password"
+	SSH_KEY_FIELD_TYPE          = "sshKeys"
+	PASSWORD_FIELD_TYPE         = "password"
 )
 
 // Errors for handling configuration and record type issues.
@@ -40,14 +40,15 @@ type KSMClient struct {
 }
 
 // Interface for a Keeper client
-type KeeperClient interface{
+type KeeperClient interface {
 	GetSecret(uid string) (*ksm.Record, error)
 	GetServerCredentials(r *ksm.Record) (*KeeperServerCredentials, error)
 	GetDatabaseCredentials(r *ksm.Record) (*KeeperDataBaseCredentials, error)
-	GetApiKey(r *ksm.Record) (*KeeperAPIKey, error)
+	// Renamed for consistency: GetApiKey -> GetAPIKey to match KeeperAPIKey return type
+	GetAPIKey(r *ksm.Record) (*KeeperAPIKey, error)
 	GetEncryptedNote(r *ksm.Record) (*KeeperEncryptedNote, error)
 	GetFile(r *ksm.Record) (*KeeperFile, error)
-	GetSoftwareLicense(r *ksm.Record) (*KeeperSoftwareLicense, error)	
+	GetSoftwareLicense(r *ksm.Record) (*KeeperSoftwareLicense, error)
 	GetLogin(r *ksm.Record) (*KeeperLogin, error)
 	GetSSHKey(r *ksm.Record) (*KeeperSSHKey, error)
 }
@@ -73,7 +74,7 @@ func NewKeeperSecretClient() (*KSMClient, error) {
 	// Create a new Keeper client with the provided options.
 	ksmClient := ksm.NewSecretsManager(clientOptions)
 	packerClient := &KSMClient{KeeperClient: ksmClient}
-	
+
 	return packerClient, nil
 }
 
@@ -97,7 +98,7 @@ func (k *KSMClient) GetServerCredentials(r *ksm.Record) (*KeeperServerCredential
 // GetDatabaseCredentials retrieves a DatabaseCredentials record from Keeper
 func (k *KSMClient) GetDatabaseCredentials(r *ksm.Record) (*KeeperDataBaseCredentials, error) {
 	// Validate the record is of the correct type
-	record, err := k.validateRecord(r,  DATABASE_FIELD_TYPE)
+	record, err := k.validateRecord(r, DATABASE_FIELD_TYPE)
 	if err != nil {
 		return nil, err
 	}
@@ -112,10 +113,11 @@ func (k *KSMClient) GetDatabaseCredentials(r *ksm.Record) (*KeeperDataBaseCreden
 	}, nil
 }
 
-// GetApiKey retrieves an API Key record from Keeper
-func (k *KSMClient) GetApiKey(r *ksm.Record) (*KeeperAPIKey, error) {
+// GetAPIKey retrieves an API Key record from Keeper
+// Renamed from GetApiKey for consistency with KeeperAPIKey return type
+func (k *KSMClient) GetAPIKey(r *ksm.Record) (*KeeperAPIKey, error) {
 	// Validate the record is of the correct type
-	record, err := k.validateRecord(r,  API_KEY_FIELD_TYPE)
+	record, err := k.validateRecord(r, API_KEY_FIELD_TYPE)
 	if err != nil {
 		return nil, err
 	}
@@ -123,8 +125,8 @@ func (k *KSMClient) GetApiKey(r *ksm.Record) (*KeeperAPIKey, error) {
 	// Extract the API key from the record
 	return &KeeperAPIKey{
 		KeeperRecordField: *getRecordFields(record),
-		AppId: 		  record.GetFieldValueByLabel("AppID"),
-		ClientSecret:    record.GetFieldValueByLabel("ClientSecret"),
+		AppId:             record.GetFieldValueByLabel("AppID"),
+		ClientSecret:      record.GetFieldValueByLabel("ClientSecret"),
 	}, nil
 }
 
@@ -166,7 +168,7 @@ func (k *KSMClient) GetSoftwareLicense(r *ksm.Record) (*KeeperSoftwareLicense, e
 	if err != nil {
 		return nil, err
 	}
-	
+
 	// Extract the software license from the record
 	return &KeeperSoftwareLicense{
 		KeeperRecordField: *getRecordFields(record),
@@ -233,7 +235,7 @@ func (k *KSMClient) GetSecret(uid string) (*ksm.Record, error) {
 // ConvertDateStr converts a date (unix timestamp) to a time string
 // the string field is misleading as it is actually a unix timestamp in milliseconds,
 // but keeper coerces it to a string when returning the record value.
-func ConvertDateStr(dateStr string) (string) {
+func ConvertDateStr(dateStr string) string {
 	// Convert the date string to an int
 	dateInt, err := strconv.Atoi(dateStr)
 	if err != nil {
@@ -272,17 +274,17 @@ func getClientOptions() (*ksm.ClientOptions, error) {
 	configFile, ok := os.LookupEnv(KEEPER_CONFIG_FILE_ENV_KEY)
 	if ok {
 		content, err := os.ReadFile(configFile)
-		if err != nil{
-			return nil,err
+		if err != nil {
+			return nil, err
 		}
-		
+
 		return &ksm.ClientOptions{
 			Config: ksm.NewMemoryKeyValueStorage(string(content)),
 		}, nil
 	}
 
 	// Check if the KSM_CONFIG environment variable is set, if so, use it to initialize the client options.
-	// the environment variable content should be the base64 encoded config content 
+	// the environment variable content should be the base64 encoded config content
 	configContent, ok := os.LookupEnv(KEEPER_CONFIG_ENV_KEY)
 	if ok {
 		return &ksm.ClientOptions{
@@ -325,14 +327,13 @@ func getFileRecords(r *ksm.Record) []FileRef {
 }
 
 // getHostItemData extracts the host connection data from a Keeper record
-func getHostItemData(secret *core.Record) (*HostConnection) {
+func getHostItemData(secret *core.Record) *HostConnection {
 	// Host data is stored in the host key in Keeper
 	fields := secret.GetFieldsByType("host")
 	if len(fields) == 0 {
 		return &HostConnection{}
 	}
 
-	
 	hc := &HostConnection{}
 
 	// Make sure the field is a list of interface

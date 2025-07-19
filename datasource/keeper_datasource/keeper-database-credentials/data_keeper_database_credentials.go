@@ -14,7 +14,6 @@ import (
 	"github.com/zclconf/go-cty/cty"
 )
 
-
 type Datasource struct {
 	Config keeper_datasource.Config
 }
@@ -36,7 +35,7 @@ func (d *Datasource) Configure(raws ...interface{}) error {
 	}
 
 	// Make sure all required fields are set and valid
-	if err := keeper_datasource.ValidateDataSourceConfig(d.Config); err != nil{
+	if err := keeper_datasource.ValidateDataSourceConfig(d.Config); err != nil {
 		return err
 	}
 
